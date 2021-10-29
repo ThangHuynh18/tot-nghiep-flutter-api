@@ -1,0 +1,9 @@
+export const OrderStatus = {
+  WAIT: 'WAIT',
+  ACCEPT: 'ACCEPT',
+  DELIVERY: 'DELIVERY',
+  DELIVERED: 'DELIVERED',
+  CANCEL: 'CANCEL',
+  FAIL: 'FAIL',
+  FINISH: 'FINISH',
+}
