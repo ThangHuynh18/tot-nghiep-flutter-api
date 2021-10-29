@@ -56,7 +56,7 @@ const productSchema = mongoose.Schema(
     rating: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0.0,
     },
     numberReviews: {
       type: Number,
@@ -66,7 +66,7 @@ const productSchema = mongoose.Schema(
     price: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0.0,
     },
     countInStock: {
       type: Number,
