@@ -343,10 +343,11 @@ const createProductReview = asyncHandler(async (req, res) => {
       //   (r) => r.user.toString() === req.user._id.toString()
       // )
 
-      // if (alreadyReviewed) {
-      //   res.status(400)
-      //   throw new Error('Already reviewed this product')
-      // }
+      if (alreadyReviewed) {
+//         res.status(400)
+//         throw new Error('Already reviewed this product')
+        return res.json({message: "fail"})
+      }
 
       const review = {
         name: req.user.name,
