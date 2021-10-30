@@ -339,9 +339,9 @@ const createProductReview = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
 
     if (product) {
-      // const alreadyReviewed = product.reviews.find(
-      //   (r) => r.user.toString() === req.user._id.toString()
-      // )
+      const alreadyReviewed = product.reviews.find(
+        (r) => r.user.toString() === req.user._id.toString()
+      )
 
       if (alreadyReviewed) {
 //         res.status(400)
