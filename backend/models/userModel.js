@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema(
     phone: {
       type: String,
     },
+    avatar: {
+      type: String,
+    },
     shippingAddress: {
       address: { type: String, required: true, default: ' ' },
       city: { type: String, required: true, default: ' ' },
