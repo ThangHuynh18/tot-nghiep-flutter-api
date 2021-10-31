@@ -51,6 +51,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      avatar: user.avatar,
       shippingAddress: user.shippingAddress,
       wishListItems: user.wishListItems,
       //cartItems: user.cartItems,
@@ -66,7 +67,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // [GET] /api/users
 // Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, role, phone, shippingAddress } = req.body
+  const { name, email, password, role, phone, avartar, shippingAddress } = req.body
 
   const userExist = await User.findOne({ email })
   console.log(req.body.role)
@@ -88,6 +89,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     role: role1,
     phone,
+    avatar,
     shippingAddress,
   })
 
@@ -97,6 +99,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      avatar: user.avatar,
       shippingAddress: user.shippingAddress,
       role: user.role,
       token: generateToken(user._id),
@@ -111,13 +114,14 @@ const registerUser = asyncHandler(async (req, res) => {
 // [PUT] /api/users/profile
 // private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const { name, email, phone, shippingAddress } = req.body
+  const { name, email, phone, avatar, shippingAddress } = req.body
   const user = await User.findById(req.user._id)
 
   if (user) {
     user.name = name || user.name
     user.email = email || user.email
     user.phone = phone || user.phone
+    user.avatar = avatar || user.avatar
     user.shippingAddress = shippingAddress || user.shippingAddress
 
     const updateUser = await user.save()
@@ -127,6 +131,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updateUser.name,
       email: updateUser.email,
       phone: updateUser.phone,
+      avatar: updateUser.avatar,
       shippingAddress: updateUser.shippingAddress,
       role: user.role,
       token: generateToken(updateUser._id),
