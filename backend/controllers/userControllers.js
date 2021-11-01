@@ -67,7 +67,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // [GET] /api/users
 // Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, role, phone, avartar, shippingAddress } = req.body
+  const { name, email, password, role, phone, avatar, shippingAddress } = req.body
 
   const userExist = await User.findOne({ email })
   console.log(req.body.role)
