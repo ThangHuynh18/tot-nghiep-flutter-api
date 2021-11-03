@@ -171,7 +171,11 @@ const updateQty = asyncHandler(async (req, res) => {
         req.user.cartItems = req.user.cartItems.map(
           (item) => {
             if(item.product.toString() === alreadyOnCart.product.toString()){
-              item.qty = quantity
+              if(quantity > item.qty){
+                return res.json({message: fail_for_greater}) 
+              } else {
+                  item.qty = quantity
+              }
             }
             console.log("item quantity: "+item.qty)
             return item
