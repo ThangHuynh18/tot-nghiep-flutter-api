@@ -153,9 +153,46 @@ const removeAllItemFromCart = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'All Items Removed' })
 })
 
+
+// Update qty in cart
+// [PUT] /api/cart/qty-update/:id-product
+// private
+const updateQty = asyncHandler(async (req, res) => {
+  try {
+    const productId = req.params.id
+    const quantity  = req.body.quantity
+      const alreadyOnCart = req.user.cartItems.find(
+        (item) => item.product.toString() === productId
+      )
+    console.log("already on cart: "+alreadyOnCart)
+    console.log("body quantity: "+quantity)
+      if (alreadyOnCart) {
+        
+        req.user.cartItems = req.user.cartItems.map(
+          (item) => {
+            if(item.product.toString() === alreadyOnCart.product.toString()){
+              item.qty = quantity
+            }
+            console.log("item quantity: "+item.qty)
+            return item
+          }
+        )
+      }
+        //req.user.wishListItems = remove.slice()
+    
+        await req.user.save()
+        res.status(200).json({ message: 'Quantity Updated' })
+
+  } catch (error) {
+    res.status(400)
+    throw new Error(`${error}`)
+  }
+})
+
 export {
   getMyCart,
   addItemToCart,
   removeItemFromCart,
   removeAllItemFromCart,
+  updateQty,
 }
