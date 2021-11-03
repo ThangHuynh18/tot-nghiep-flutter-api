@@ -266,7 +266,7 @@ const getOrdersByStatus = asyncHandler(async (req, res) => {
     console.log(req.params.status)
     console.log(req.user._id)
     const orders = await Order.find({ user: req.user._id, status: req.params.status }).sort({
-      createdAt: 'desc',
+      updatedAt : 'desc',
     })
 
     if (orders) {
