@@ -257,6 +257,32 @@ const getTotalOrdersByStatus = asyncHandler(async (req, res) => {
   }
 })
 
+
+// Get my orders by status
+// [GET] /api/orders/myorders/:status
+// private
+const getOrdersByStatus = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.params.status)
+    console.log(req.user._id)
+    const orders = await Order.find({ user: req.user._id, status: req.params.status }).sort({
+      createdAt: 'desc',
+    })
+
+    if (orders) {
+      res.json(orders)
+    } else {
+      res.status(404)
+      throw new Error('Không tìm thấy đơn hàng!')
+    }
+  } catch (error) {
+    const errors = customErrorHandler(error, res)
+    res
+      .status(errors.statusCode)
+      .json({ status: 'fail', data: null, errors: errors.message })
+  }
+})
+
 export {
   addOrderItems,
   getOrderById,
@@ -266,4 +292,5 @@ export {
   getMyOrders,
   getOrders,
   getTotalOrdersByStatus,
+  getOrdersByStatus,
 }
