@@ -29,6 +29,7 @@ const authUser = asyncHandler(async (req, res) => {
       shippingAddress: user.shippingAddress,
       token: token,
       phone: user.phone,
+      avatar: user.avatar,
     })
   } else {
     res.status(401)
