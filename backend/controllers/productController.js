@@ -403,6 +403,24 @@ const getTopProducts = asyncHandler(async (req, res) => {
   }
 })
 
+
+// Total product
+// [GET] /api/products/total
+// Private/admin
+const totalProduct = asyncHandler(async (req, res) => {
+  try {
+    const total = await Product.countDocuments()
+   // console.log("count: "+total)
+    res
+      .status(200)
+      .json({ successCode: 'success', data: total, errorCode: null })
+  } catch (error) {
+    res.status(400)
+    throw new Error(`${error}`)
+  }
+})
+
+
 // Get top bought products
 // [GET] /api/products/topbuy
 // public
