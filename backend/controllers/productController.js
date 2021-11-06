@@ -543,4 +543,5 @@ export {
   productBestSeller,
   updateDiscountProduct,
   getDiscountProduct,
+  totalProduct,
 }
