@@ -16,6 +16,7 @@ import {
   updateDiscountProduct,
   getDiscountProduct,
   getProductsByBrand,
+  totalProduct,
 } from '../controllers/productController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -30,6 +31,7 @@ router.get('/best-seller', protect, admin, productBestSeller)
 router.get('/category/:id', getProductsByCategory)
 router.get('/brand/:id', getProductsByBrand)
 router.post('/', protect, admin, createProduct)
+router.get('/total', protect, admin, totalProduct)
 router.get('/:id', getProductById)
 router.get('/get/:name', getProductByName)
 router.put('/discount-update', protect, admin, updateDiscountProduct)
