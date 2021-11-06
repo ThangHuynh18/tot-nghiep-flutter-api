@@ -246,7 +246,7 @@ const changePassword = asyncHandler(async (req, res) => {
 // Private/admin
 const totalUser = asyncHandler(async (req, res) => {
   try {
-    const count = await User.countDocuments({ isAdmin: false })
+    const count = await User.countDocuments({ role: 61544803b918f284d3a05618 })
     res
       .status(200)
       .json({ successCode: 'success', data: count, errorCode: null })
