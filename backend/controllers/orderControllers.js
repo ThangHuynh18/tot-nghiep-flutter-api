@@ -246,10 +246,10 @@ const getTotalOrdersByStatus = asyncHandler(async (req, res) => {
   try {
     if (status) {
       const total = await Order.countDocuments({ status: status })
-      res.json({ statusCode: 'success', data: total, errorCode: null })
+      res.json({ successCode: 'success', data: total, errorCode: null })
     } else {
       const total = await Order.countDocuments()
-      res.json({ statusCode: 'success', data: total, errorCode: null })
+      res.json({ successCode: 'success', data: total, errorCode: null })
     }
   } catch (error) {
     res.status(400)
