@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler'
 import Role from '../models/roleModel.js'
 import User from '../models/userModel.js'
+import Product from '../models/productModel.js'
+import Order from '../models/orderModel.js'
 import generateToken from '../utils/generateToken.js'
 
 // Auth user & get token
@@ -256,6 +258,31 @@ const totalUser = asyncHandler(async (req, res) => {
   }
 })
 
+
+// Total
+// [GET] /api/users/dashboard
+// Private/admin
+const dashboard = asyncHandler(async (req, res) => {
+  try {
+    const totalCustomer = await User.countDocuments({ role: '61544803b918f284d3a05618' })
+    const totalProduct = await Product.countDocuments()
+    const totalOrder = await Order.countDocuments()
+
+    const data = {
+      totalCustomer: totalCustomer,
+      totalOrder: totalOrder,
+      totalProduct: totalProduct
+    }
+    res
+      .status(200)
+      .json({ successCode: 'success', data: data, errorCode: null })
+  } catch (error) {
+    res.status(400)
+    throw new Error(`${error}`)
+  }
+})
+
+
 export {
   authUser,
   getUserProfile,
@@ -267,4 +294,5 @@ export {
   updateUser,
   changePassword,
   totalUser,
+  dashboard,
 }
