@@ -9,6 +9,7 @@ import {
   getOrders,
   getTotalOrdersByStatus,
   getOrdersByStatus,
+  getAllOrdersByStatus,
 } from '../controllers/orderControllers.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -23,5 +24,6 @@ router.put('/:id/pay', protect, updateOrderToPaid)
 router.put('/:id/status', protect, updateOrderStatus)
 router.put('/:id/deliver', protect, admin, updateOrderToDelivered)
 router.get('/myorders/:status', protect, getOrdersByStatus)
+router.get('/status/:status',protect, admin, getAllOrdersByStatus)
 
 export default router
