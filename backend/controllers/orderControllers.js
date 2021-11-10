@@ -291,7 +291,7 @@ const getOrdersByStatus = asyncHandler(async (req, res) => {
 const getAllOrdersByStatus = asyncHandler(async (req, res) => {
   try {
     console.log(req.params.status)
-    const orders = await Order.find({ status: req.params.status }).sort({
+    const orders = await Order.find({ status: req.params.status }).populate('user', 'id name').sort({
       createdAt: 'desc',
     })
 
