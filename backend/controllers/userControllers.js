@@ -3,6 +3,10 @@ import Role from '../models/roleModel.js'
 import User from '../models/userModel.js'
 import Product from '../models/productModel.js'
 import Order from '../models/orderModel.js'
+import OrderSupplier from '../models/orderSupplierModel.js'
+import Import from '../models/importModel.js'
+import Brand from '../models/brandModel.js'
+import Category from '../models/categoryModel.js'
 import generateToken from '../utils/generateToken.js'
 
 // Auth user & get token
@@ -267,11 +271,19 @@ const dashboard = asyncHandler(async (req, res) => {
     const totalCustomer = await User.countDocuments({ role: '61544803b918f284d3a05618' })
     const totalProduct = await Product.countDocuments()
     const totalOrder = await Order.countDocuments()
+    const totalImport = await Import.countDocuments()
+    const totalSupplier = await OrderSupplier.countDocuments()
+    const totalBrand = await Brand.countDocuments()
+    const totalCate = await Category.countDocuments()
 
     const data = {
       totalCustomer: totalCustomer,
       totalOrder: totalOrder,
-      totalProduct: totalProduct
+      totalProduct: totalProduct,
+      totalOrderSupplier: totalSupplier,
+      totalImport: totalImport,
+      totalBrand: totalBrand,
+      totalCate: totalCate,
     }
     res
       .status(200)
