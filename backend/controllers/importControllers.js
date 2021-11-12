@@ -191,9 +191,55 @@ const updateImportOrderStatus = asyncHandler(async (req, res) => {
   }
 })
 
+
+// Get all order import by status
+// [GET] /api/imports/status/:status
+// private/admin
+const getAllImportByStatus = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.params.status)
+    const orders = await Import.find({ status: req.params.status }).populate([
+      {
+        path: 'importItems',
+        populate: {
+          path: 'product',
+          select: 'name images',
+        },
+      },
+      { path: 'user', select: 'name email' },
+      {
+        path: 'orderSupplier',
+        populate: [
+          { path: 'supplier', select: 'name phone supplierAddress' },
+          
+        ],
+        select: 'supplier user',
+      },
+    ]).sort({
+      updatedAt: 'desc',
+    })
+
+
+    if (orders) {
+      res.json(orders)
+    } else {
+      res.status(404)
+      throw new Error('Không tìm thấy đơn đặt hàng!')
+    }
+  } catch (error) {
+    const errors = customErrorHandler(error, res)
+    res
+      .status(errors.statusCode)
+      .json({ status: 'fail', data: null, errors: errors.message })
+  }
+})
+
+
+
 export {
   addImportItems,
   getImportOrderById,
   getImportOrder,
   updateImportOrderStatus,
+  getAllImportByStatus,
 }
