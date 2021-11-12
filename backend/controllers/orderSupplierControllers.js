@@ -151,9 +151,48 @@ const getOrderSuppliers = asyncHandler(async (req, res) => {
   }
 })
 
+
+// Get all order supplier by status
+// [GET] /api/order-suppliers/status/:status
+// private/admin
+const getAllOrderSupplierByStatus = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.params.status)
+    const orders = await OrderSupplier.find({ status: req.params.status }).populate([
+      {
+        path: 'orderItems',
+        populate: {
+          path: 'product',
+          select: 'name images',
+        },
+      },
+      { path: 'user', select: 'name email' },
+      { path: 'supplier', select: 'name phone' },
+    ]).sort({
+      updatedAt: 'desc',
+    })
+
+    
+    if (orders) {
+      res.json(orders)
+    } else {
+      res.status(404)
+      throw new Error('Không tìm thấy đơn đặt hàng!')
+    }
+  } catch (error) {
+    const errors = customErrorHandler(error, res)
+    res
+      .status(errors.statusCode)
+      .json({ status: 'fail', data: null, errors: errors.message })
+  }
+})
+
+
+
 export {
   addOrderItems,
   getOrderSupplierById,
   updateOrderSupplierStatus,
   getOrderSuppliers,
+  getAllOrderSupplierByStatus,
 }
