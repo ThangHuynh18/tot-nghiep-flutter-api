@@ -114,11 +114,13 @@ const getImportOrder = asyncHandler(async (req, res) => {
         path: 'orderSupplier',
         populate: [
           { path: 'supplier', select: 'name phone supplierAddress' },
-          { path: 'user', select: 'name email' },
+          
         ],
         select: 'supplier user',
       },
-    ])
+    ]).sort({
+      updatedAt: 'desc',
+    })
 
     res
       .status(200)
