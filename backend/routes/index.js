@@ -9,6 +9,7 @@ import supplierRoutes from './supplierRoutes.js'
 import orderSupplierRoutes from './orderSupplierRoutes.js'
 import importRoutes from './importRoutes.js'
 import cartRoutes from './cartRoutes.js'
+import dashboardRoutes from './dashboardRoutes.js'
 
 const route = (app) => {
   app.use('/api/products', productRoutes)
@@ -22,6 +23,7 @@ const route = (app) => {
   app.use('/api/order-suppliers', orderSupplierRoutes)
   app.use('/api/imports', importRoutes)
   app.use('/api/cart', cartRoutes)
+  app.use('/api/dashboard', dashboardRoutes)
 }
 
 export default route
