@@ -59,8 +59,30 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
     
         res.status(200).json({ status: 'success', data: bestSeller, error: null })
         } else {
-            res.status(404)
-            throw new Error('Not found date')
+//             res.status(404)
+//             throw new Error('Not found date')
+            const bestSeller = await Order.aggregate([
+                {
+                    $match: {
+                      status: 'ACCEPT',
+                      
+                    },
+                },
+                {
+                $unwind: { path: '$orderItems' },
+                },
+                {
+                $group: {
+                    _id: '$orderItems.product',
+                    name: { $first: '$orderItems.name' },
+                    totalSell: { $sum: '$orderItems.qty' },
+                },
+                },
+                { $sort: { totalSell: -1 } },
+                { $limit: 10 },
+            ])
+        
+            res.status(200).json({ status: 'success', data: bestSeller, error: null })
         }
     } catch (error) {
       res.status(400)
@@ -113,8 +135,29 @@ const orderBetween = asyncHandler(async (req, res, next) => {
     
         res.status(200).json({ status: 'success', data: orders, error: null })
         } else {
-            res.status(404)
-            throw new Error('Not found date')
+//             res.status(404)
+//             throw new Error('Not found date')
+            const orders = await Order.aggregate([
+                {
+                    $match: {
+                      status: 'ACCEPT',
+                      
+                    },
+                },
+    
+                { 
+                    $project : { 
+                        totalPrice : 1 , 
+                        orderItems : 1 , 
+                        createdAt: 1 
+                    } 
+                },
+               
+                { $sort: { totalPrice: -1 } },
+                { $limit: 10 },
+            ])
+        
+            res.status(200).json({ status: 'success', data: orders, error: null })
         }
     } catch (error) {
       res.status(400)
