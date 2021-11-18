@@ -7,8 +7,8 @@ import { protect, admin } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
-router.get('/order', protect, admin, orderBetween)
-router.get('/product', protect, admin, productBestSeller)
+router.put('/order', protect, admin, orderBetween)
+router.put('/product', protect, admin, productBestSeller)
 
 
 export default router
