@@ -12,7 +12,7 @@ const getMyCart = asyncHandler(async (req, res) => {
         path: 'cartItems',
         populate: {
           path: 'product',
-          select: 'name images price countInStock',
+          select: 'name images price countInStock discount',
         },
       })
       .select('cartItems -_id')
