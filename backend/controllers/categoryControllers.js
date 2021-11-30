@@ -83,9 +83,16 @@ const deleteCategoryForce = asyncHandler(async (req, res) => {
   const category = await Category.findOneWithDeleted({ _id: req.params.id })
 
   if (category) {
-    await category.deleteOne()
-
-    res.status(200).json({ message: 'Category deleted' })
+    const alreadyHaveProducts = await Product.findOne({
+      category: category._id,
+    })
+    if (alreadyHaveProducts) {
+      res.status(400)
+      throw new Error('Category already have products')
+    } else {
+      await category.deleteOne()
+      res.status(200).json({ message: 'Category deleted' })
+    }
   } else {
     res.status(404)
     throw new Error('Category not found')
