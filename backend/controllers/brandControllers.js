@@ -85,9 +85,17 @@ const deleteBrandForce = asyncHandler(async (req, res) => {
   const brand = await Brand.findOneWithDeleted({ _id: req.params.id })
 
   if (brand) {
-    await brand.deleteOne()
-
-    res.status(200).json({ message: 'Brand deleted' })
+    const alreadyHaveProducts = await Product.findOne({
+      brand: brand._id,
+    })
+    if (alreadyHaveProducts) {
+      res.status(400)
+      throw new Error('Brand already have products')
+    } else {
+      await brand.deleteOne()
+      res.status(200).json({ message: 'Brand deleted' })
+    }
+    
   } else {
     res.status(404)
     throw new Error('Brand not found')
