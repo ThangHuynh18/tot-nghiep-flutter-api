@@ -31,9 +31,9 @@ router.get('/:id', protect, admin, getUserById)
 router.put('/:id', protect, admin, updateUser)
 router.delete('/:id', protect, admin, deleteUser)
 
-router.route('/voucher/myvoucher').get(protect, getUserVoucher)
+router.get('/voucher/myvoucher',protect, getUserVoucher)
 
-router.route('/voucher/add').post(protect, addVoucherToUserVoucher)
-router.route('/voucher/:id/remove').delete(protect, removeVoucherInUserVoucher)
+router.post('/voucher/add',protect, addVoucherToUserVoucher)
+router.delete('/voucher/:id/remove',protect, removeVoucherInUserVoucher)
 
 export default router
