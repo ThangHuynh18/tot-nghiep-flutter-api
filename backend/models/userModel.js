@@ -56,17 +56,17 @@ const userSchema = mongoose.Schema(
         }
       },
     ],
-    voucher: [
-            {
-                name: { type: String, required: true },
-                discount: { type: Number, required: true },
-                voucherId: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    required: true,
-                    ref: 'Voucher',
-                },
-            },
-        ],
+//     voucher: [
+//             {
+//                 name: { type: String, required: true },
+//                 discount: { type: Number, required: true },
+//                 voucherId: {
+//                     type: mongoose.Schema.Types.ObjectId,
+//                     required: true,
+//                     ref: 'Voucher',
+//                 },
+//             },
+//         ],
     role: {
       type: mongoose.Schema.Types.ObjectId,
       required: [true, 'Chưa chọn quyền cho tài khoản!'],
