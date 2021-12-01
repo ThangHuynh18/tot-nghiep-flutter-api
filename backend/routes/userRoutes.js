@@ -11,9 +11,7 @@ import {
   changePassword,
   totalUser,
   dashboard,
-  getUserVoucher,
-  addVoucherToUserVoucher,
-  removeVoucherInUserVoucher
+  
 } from '../controllers/userControllers.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 import cors from 'cors'
@@ -31,9 +29,9 @@ router.get('/:id', protect, admin, getUserById)
 router.put('/:id', protect, admin, updateUser)
 router.delete('/:id', protect, admin, deleteUser)
 
-router.get('/voucher/myvoucher',protect, getUserVoucher)
+// router.get('/voucher/myvoucher',protect, getUserVoucher)
 
-router.post('/voucher/add',protect, addVoucherToUserVoucher)
-router.delete('/voucher/:id/remove',protect, removeVoucherInUserVoucher)
+// router.post('/voucher/add',protect, addVoucherToUserVoucher)
+// router.delete('/voucher/:id/remove',protect, removeVoucherInUserVoucher)
 
 export default router
