@@ -4,6 +4,9 @@ import {
     getVouchers, createVoucher, updateVoucher, deleteVoucher,
 } from '../controllers/voucherController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
+import cors from 'cors'
+
+
 
 router.get('/', getVouchers)
 router.post('/', protect, admin, createVoucher)
