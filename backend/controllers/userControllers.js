@@ -8,7 +8,7 @@ import Import from '../models/importModel.js'
 import Brand from '../models/brandModel.js'
 import Category from '../models/categoryModel.js'
 import generateToken from '../utils/generateToken.js'
-import Voucher from '../models/voucherModel.js'
+//import Voucher from '../models/voucherModel.js'
 
 // Auth user & get token
 // [POST] /api/users/login
@@ -295,70 +295,7 @@ const dashboard = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Add voucher to user voucher
-// @route   POST /api/users/voucher/add
-// @access  Private
-const addVoucherToUserVoucher = asyncHandler(async (req, res) => {
-    const voucherName = req.body.name
 
-    const voucher = await Voucher.findOne({ "name": voucherName })
-
-    if (voucher) {
-        const item = {
-            name: voucher.name,
-            discount: voucher.discount,
-            voucherId: voucher._id,
-        }
-        req.user.voucher.push(item)
-        await req.user.save()
-        res.status(201).json({ message: 'Add to voucher Successfully' })
-    } else {
-        res.status(404)
-        throw new Error('Voucher not found')
-    }
-})
-
-// @desc    remove voucher in user voucher
-// @route   PUT /api/users/voucher/:id/remove
-// @access  Private
-const removeVoucherInUserVoucher = asyncHandler(async (req, res) => {
-    const voucherId = req.params.id
-
-    if (req.user.voucher.length <= 0) {
-        res.status(404)
-        throw new Error('Your List Voucher is empty')
-    }
-    const alreadyAdded = req.user.voucher.find(
-        (item) => item.voucherId._id.toString() === voucherId.toString()
-    )
-    if (alreadyAdded) {
-        req.user.voucher = req.user.voucher.filter(
-            (item) => item.voucherId.toString() !== alreadyAdded.voucherId.toString()
-        )
-        const voucherRemoved = await req.user.save()
-        res.json({ message: 'Voucher removed from list', voucherRemoved: voucherRemoved })
-    }
-    else {
-        res.json({ message: "Voucher not found" })
-    }
-}
-)
-
-// @desc        Get user voucher
-// @route       GET /api/users/voucher/myvoucher
-// @access      Private
-const getUserVoucher = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id)
-
-    if (user) {
-        res.json(
-            user.voucher
-        )
-    } else {
-        res.status(404)
-        throw new Error('User not found ')
-    }
-})
 
 
 export {
@@ -373,7 +310,4 @@ export {
   changePassword,
   totalUser,
   dashboard,
-  addVoucherToUserVoucher,
-  removeVoucherInUserVoucher,
-  getUserVoucher
 }
