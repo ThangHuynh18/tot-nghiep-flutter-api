@@ -5,7 +5,9 @@ import {
 } from '../controllers/voucherController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
-router.route('/').get(getVouchers).post(protect, admin, createVoucher)
-router.route('/:id').put(protect, admin, updateVoucher).delete(protect, admin, deleteVoucher)
+router.get('/', getVouchers)
+router.post('/', protect, admin, createVoucher)
+router.put('/:id',protect, admin, updateVoucher)
+router.delete('/:id', protect, admin, deleteVoucher)
 
 export default router
