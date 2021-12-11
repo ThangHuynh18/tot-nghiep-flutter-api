@@ -275,7 +275,17 @@ const getOrdersByStatus = asyncHandler(async (req, res) => {
   try {
     console.log(req.params.status)
     console.log(req.user._id)
-    const orders = await Order.find({ user: req.user._id, status: req.params.status }).sort({
+    const orders = await Order.find({ user: req.user._id, status: req.params.status }).populate([
+    {
+      path: 'orderItems',
+      populate: {
+        path: 'product',
+        select: 'name images price',
+        //populate: { path: 'category', select: 'name' },
+      },
+    },
+    //{ path: 'user', select: 'name email' },
+  ]).sort({
       updatedAt : 'desc',
     })
 
