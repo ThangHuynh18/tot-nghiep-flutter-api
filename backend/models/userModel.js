@@ -58,13 +58,9 @@ const userSchema = mongoose.Schema(
     ],
     voucher: [
             {
-                name: { type: String, required: true },
-                discount: { type: Number, required: true },
-                voucherId: {
                     type: mongoose.Schema.Types.ObjectId,
                     required: true,
                     ref: 'Voucher',
-                },
             },
         ],
     role: {
