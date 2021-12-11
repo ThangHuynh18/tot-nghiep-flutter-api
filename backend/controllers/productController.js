@@ -31,6 +31,10 @@ const getProducts = asyncHandler(async (req, res) => {
       .populate([
         { path: 'category', select: 'name' },
         { path: 'brand', select: 'name' },
+        { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
       ])
       .limit(pageSize)
       .skip(pageSize * (page - 1))
