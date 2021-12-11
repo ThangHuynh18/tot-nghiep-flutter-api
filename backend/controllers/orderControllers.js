@@ -241,8 +241,18 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // [GET] /api/orders
 // private/admin
 const getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({})
-    .populate('user', 'id name')
+  const orders = await Order.find({}).populate([
+    {
+      path: 'orderItems',
+      populate: {
+        path: 'product',
+        select: 'name images price',
+        //populate: { path: 'category', select: 'name' },
+      },
+    },
+    { path: 'user', select: 'name email' },
+  ])
+    //.populate('user', 'id name')
     .sort('-createdAt')
 
   res.json(orders)
