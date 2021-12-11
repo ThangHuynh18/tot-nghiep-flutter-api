@@ -220,7 +220,17 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @router  GET /api/orders/myorders
 // @access  private
 const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id }).sort({
+  const orders = await Order.find({ user: req.user._id }).populate([
+    {
+      path: 'orderItems',
+      populate: {
+        path: 'product',
+        select: 'name images price',
+        //populate: { path: 'category', select: 'name' },
+      },
+    },
+    //{ path: 'user', select: 'name email' },
+  ]).sort({
     createdAt: 'desc',
   })
 
