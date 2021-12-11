@@ -65,13 +65,14 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                             from: "products",
                             localField: "_id",
                             foreignField: "_id",
-                            as: "name" 
+                            as: "item" 
                       },
             },
             { 
                 $project : {
-                    _id : 0,
-                    name : 1 , 
+                    _id : 1,
+                    totalSell: 1,
+                    name : "$item.name", 
                  
                 } 
             },
@@ -113,13 +114,14 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                             from: "products",
                             localField: "_id",
                             foreignField: "_id",
-                            as: "name" 
+                            as: "item" 
                       },
                 },
                 { 
                     $project : {
                         _id : 0,
-                        name : 1 , 
+                         totalSell: 1,
+                        name : "$item.name", 
 
                     } 
                 },
