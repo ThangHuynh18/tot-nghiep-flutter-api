@@ -65,6 +65,10 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
       .populate([
         { path: 'category', select: 'name' },
         { path: 'brand', select: 'name' },
+        { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
       ])
       .limit(pageSize)
       .sort({ createdAt: 'desc' })
@@ -93,6 +97,10 @@ const getProductsByBrand = asyncHandler(async (req, res) => {
       .populate([
         { path: 'category', select: 'name' },
         { path: 'brand', select: 'name' },
+        { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
       ])
       .limit(pageSize)
       .sort({ createdAt: 'desc' })
@@ -119,6 +127,10 @@ const getAllProducts = asyncHandler(async (req, res) => {
       .populate([
         { path: 'category', select: 'name' },
         { path: 'brand', select: 'name' },
+        { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
       ])
       .sort({ createdAt: 'desc' })
     res.json({ products})
@@ -138,6 +150,10 @@ const getProductById = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate([
       { path: 'category', select: 'name' },
       { path: 'brand', select: 'name' },
+      { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
     ])
 
     if (product) {
@@ -289,6 +305,10 @@ const getDiscountProduct = asyncHandler(async (req, res) => {
       .populate([
         { path: 'category', select: 'name' },
         { path: 'brand', select: 'name' },
+        { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
       ])
       .sort({ discount: 'desc' })
     if (discount) {
@@ -354,7 +374,7 @@ const createProductReview = asyncHandler(async (req, res) => {
       }
 
       const review = {
-        name: req.user.name,
+       // name: req.user.name,
         rating: Number(rating),
         comment,
         user: req.user._id,
@@ -394,6 +414,10 @@ const getTopProducts = asyncHandler(async (req, res) => {
       .populate([
         { path: 'category', select: 'name' },
         { path: 'brand', select: 'name' },
+        { path: 'reviews', populate: {
+            path: 'user',
+            select: 'name',
+          }, },
       ])
       .sort({ rating: -1 })
       .limit(3)
