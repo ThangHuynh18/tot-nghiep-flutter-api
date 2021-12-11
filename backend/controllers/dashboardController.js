@@ -49,7 +49,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
             {
             $group: {
                 _id: '$orderItems.product',
-                name: { $first: '$orderItems.name' },
+                name: { $first: '$orderItems.product.name' },
                 totalSell: { $sum: '$orderItems.qty' },
             },
             },
@@ -74,7 +74,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                 {
                 $group: {
                     _id: '$orderItems.product',
-                    name: { $first: '$orderItems.name' },
+                    name: { $first: '$orderItems.product.name' },
                     totalSell: { $sum: '$orderItems.qty' },
                 },
                 },
