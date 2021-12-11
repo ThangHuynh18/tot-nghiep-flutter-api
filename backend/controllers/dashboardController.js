@@ -119,7 +119,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                 },
                 { 
                     $project : {
-                        _id : 0,
+                        _id : 1,
                          totalSell: 1,
                         name : "$item.name", 
 
