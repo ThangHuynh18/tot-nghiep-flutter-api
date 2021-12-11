@@ -49,7 +49,14 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
             {
             $group: {
                 _id: '$orderItems.product',
-                name: { $first: '$orderItems.product.name' },
+//                 name: { $first: '$orderItems.product.name' },
+                name: { $lookup: {
+                            from: "products",
+                            localField: "product",
+                            foreignField: "_id",
+                            as: "item"
+                        },
+                      },
                 totalSell: { $sum: '$orderItems.qty' },
             },
             },
@@ -74,7 +81,14 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                 {
                 $group: {
                     _id: '$orderItems.product',
-                    name: { $first: '$orderItems.product.name' },
+                   // name: { $first: '$orderItems.product.name' },
+                     name: { $lookup: {
+                            from: "products",
+                            localField: "product",
+                            foreignField: "_id",
+                            as: "item"
+                        },
+                      },
                     totalSell: { $sum: '$orderItems.qty' },
                 },
                 },
