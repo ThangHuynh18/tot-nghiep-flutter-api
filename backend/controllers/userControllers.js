@@ -354,7 +354,9 @@ const removeVoucherInUserVoucher = asyncHandler(async (req, res) => {
 // @route       GET /api/users/voucher/myvoucher
 // @access      Private
 const getUserVoucher = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id).populate([
+        { path: 'voucher', select: 'name discount' },
+      ])
 
   if (user) {
       res.json(
