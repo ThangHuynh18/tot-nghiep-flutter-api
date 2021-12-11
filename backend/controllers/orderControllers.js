@@ -231,7 +231,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
     },
     //{ path: 'user', select: 'name email' },
   ]).sort({
-    createdAt: 'desc',
+    updatedAt: 'desc',
   })
 
   res.json(orders)
@@ -253,7 +253,7 @@ const getOrders = asyncHandler(async (req, res) => {
     { path: 'user', select: 'name email' },
   ])
     //.populate('user', 'id name')
-    .sort('-createdAt')
+    .sort('-updatedAt')
 
   res.json(orders)
 })
@@ -321,8 +321,21 @@ const getOrdersByStatus = asyncHandler(async (req, res) => {
 const getAllOrdersByStatus = asyncHandler(async (req, res) => {
   try {
     console.log(req.params.status)
-    const orders = await Order.find({ status: req.params.status }).populate('user', 'id name').sort({
-      createdAt: 'desc',
+    const orders = await Order.find({ status: req.params.status })
+    .populate([
+    {
+      path: 'orderItems',
+      populate: {
+        path: 'product',
+        select: 'name images price',
+        //populate: { path: 'category', select: 'name' },
+      },
+    },
+    { path: 'user', select: 'name email' },
+  ])
+//     .populate('user', 'id name')
+    .sort({
+      updatedAt: 'desc',
     })
 
     if (orders) {
