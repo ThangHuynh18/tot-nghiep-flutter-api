@@ -33,7 +33,7 @@ const getProducts = asyncHandler(async (req, res) => {
         { path: 'brand', select: 'name' },
         { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
       ])
       .limit(pageSize)
@@ -67,7 +67,7 @@ const getProductsByCategory = asyncHandler(async (req, res) => {
         { path: 'brand', select: 'name' },
         { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
       ])
       .limit(pageSize)
@@ -99,7 +99,7 @@ const getProductsByBrand = asyncHandler(async (req, res) => {
         { path: 'brand', select: 'name' },
         { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
       ])
       .limit(pageSize)
@@ -129,7 +129,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
         { path: 'brand', select: 'name' },
         { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
       ])
       .sort({ createdAt: 'desc' })
@@ -152,7 +152,7 @@ const getProductById = asyncHandler(async (req, res) => {
       { path: 'brand', select: 'name' },
       { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
     ])
 
@@ -307,7 +307,7 @@ const getDiscountProduct = asyncHandler(async (req, res) => {
         { path: 'brand', select: 'name' },
         { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
       ])
       .sort({ discount: 'desc' })
@@ -416,7 +416,7 @@ const getTopProducts = asyncHandler(async (req, res) => {
         { path: 'brand', select: 'name' },
         { path: 'reviews', populate: {
             path: 'user',
-            select: 'name',
+            select: 'name avatar',
           }, },
       ])
       .sort({ rating: -1 })
