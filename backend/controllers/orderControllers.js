@@ -71,10 +71,10 @@ const getOrderById = asyncHandler(async (req, res) => {
       populate: {
         path: 'product',
         select: 'name images price',
-        populate: { path: 'category', select: 'name' },
+        //populate: { path: 'category', select: 'name' },
       },
     },
-    { path: 'user', select: 'name email' },
+    //{ path: 'user', select: 'name email' },
   ])
 
   if (order) {
