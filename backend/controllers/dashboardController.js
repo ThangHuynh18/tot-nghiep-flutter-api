@@ -50,15 +50,23 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
             $group: {
                 _id: '$orderItems.product',
 //                 name: { $first: '$orderItems.product.name' },
-                name: { $lookup: {
-                            from: "products",
-                            localField: "product",
-                            foreignField: "_id",
-                            as: "item"
-                        },
-                      },
+//                 name: { $lookup: {
+//                             from: "products",
+//                             localField: "product",
+//                             foreignField: "_id",
+//                             as: "item"
+//                         },
+//                       },
                 totalSell: { $sum: '$orderItems.qty' },
             },
+            },
+            {
+                $lookup: {
+                            from: "products",
+                            localField: "_id.product",
+                            foreignField: "_id",
+                            as: "item" 
+                      },
             },
             { $sort: { totalSell: -1 } },
             { $limit: 10 },
@@ -82,16 +90,26 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                 $group: {
                     _id: '$orderItems.product',
                    // name: { $first: '$orderItems.product.name' },
-                     name: { $lookup: {
-                            from: "products",
-                            localField: "product",
-                            foreignField: "_id",
-                            as: "item"
-                        },
-                      },
+//                      name: { $lookup: {
+//                             from: "products",
+//                             localField: "product",
+//                             foreignField: "_id",
+//                             as: "item"
+//                         },
+//                       },
                     totalSell: { $sum: '$orderItems.qty' },
                 },
                 },
+                
+                {
+                    $lookup: {
+                            from: "products",
+                            localField: "_id.product",
+                            foreignField: "_id",
+                            as: "item" 
+                      },
+                },
+                
                 { $sort: { totalSell: -1 } },
                 { $limit: 10 },
             ])
