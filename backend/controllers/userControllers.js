@@ -306,14 +306,18 @@ const addVoucherToUserVoucher = asyncHandler(async (req, res) => {
   const voucher = await Voucher.findOne({ "name": voucherName })
 
   if (voucher) {
-      const item = {
-          name: voucher.name,
-          discount: voucher.discount,
-          voucherId: voucher._id,
+    
+        const alreadyAdded = req.user.voucher.find(
+          (item) => item._id.toString() === voucher._id.toString()
+      )
+      if (alreadyAdded) {
+         res.status(200)
       }
-      req.user.voucher.push(item)
-      await req.user.save()
-      res.status(201).json({ message: 'Add to voucher Successfully' })
+      else {
+        req.user.voucher.push(voucher)
+        await req.user.save()
+        res.status(201).json({ message: 'Add to voucher Successfully' })
+      }
   } else {
       res.status(404)
       throw new Error('Voucher not found')
@@ -331,11 +335,11 @@ const removeVoucherInUserVoucher = asyncHandler(async (req, res) => {
       throw new Error('Your List Voucher is empty')
   }
   const alreadyAdded = req.user.voucher.find(
-      (item) => item.voucherId._id.toString() === voucherId.toString()
+      (item) => item._id.toString() === voucherId.toString()
   )
   if (alreadyAdded) {
       req.user.voucher = req.user.voucher.filter(
-          (item) => item.voucherId.toString() !== alreadyAdded.voucherId.toString()
+          (item) => item._id.toString() !== alreadyAdded._id.toString()
       )
       const voucherRemoved = await req.user.save()
       res.json({ message: 'Voucher removed from list', voucherRemoved: voucherRemoved })
