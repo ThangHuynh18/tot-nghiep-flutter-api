@@ -63,7 +63,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
             {
                 $lookup: {
                             from: "products",
-                            localField: "product",
+                            localField: "_id",
                             foreignField: "_id",
                             as: "item" 
                       },
@@ -104,7 +104,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
                 {
                     $lookup: {
                             from: "products",
-                            localField: "product",
+                            localField: "_id",
                             foreignField: "_id",
                             as: "item" 
                       },
