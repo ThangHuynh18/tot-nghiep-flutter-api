@@ -222,7 +222,7 @@ const forceDeleteProduct = asyncHandler(async (req, res) => {
     const product = await Product.findOneWithDeleted({ _id: req.params.id })
 
     if (product) {
-      const order = await Order.findOne({"$orderItems.product": req.params.id})
+      const order = await Order.findOne({"orderItems.product": req.params.id})
       if(order){
         res.status(400)
         throw new Error('Sản phẩm đang nằm trong đơn hàng nên không thể xóa')
