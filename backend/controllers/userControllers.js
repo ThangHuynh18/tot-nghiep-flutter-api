@@ -389,6 +389,7 @@ export {
   registerUser,
   updateUserProfile,
   getUsers,
+  getRoles,
   deleteUser,
   getUserById,
   updateUser,
