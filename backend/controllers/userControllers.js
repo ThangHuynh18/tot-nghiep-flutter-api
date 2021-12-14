@@ -166,7 +166,7 @@ const getUsers = asyncHandler(async (req, res) => {
 // @router  GET /api/users/role
 // @access  public
 const getRoles = asyncHandler(async (req, res) => {
-  const roles = await Role.find({}).sort({ createdAt: 'desc' })
+  const roles = await Role.find({}, {"deleted": 0, "description": 0}).sort({ createdAt: 'desc' })
 
   res.json(roles)
 })
