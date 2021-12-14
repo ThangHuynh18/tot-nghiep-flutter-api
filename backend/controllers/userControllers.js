@@ -161,6 +161,17 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
+
+// @desc    Fetch all roles
+// @router  GET /api/users/role
+// @access  public
+const getRoles = asyncHandler(async (req, res) => {
+  const roles = await Role.find({}).sort({ createdAt: 'desc' })
+
+  res.json(roles)
+})
+
+
 // Delete user
 // [DELETE] /api/users
 // private/admin
