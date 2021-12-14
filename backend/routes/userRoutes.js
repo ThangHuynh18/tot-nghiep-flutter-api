@@ -5,6 +5,7 @@ import {
   registerUser,
   updateUserProfile,
   getUsers,
+  getRoles,
   deleteUser,
   getUserById,
   updateUser,
@@ -31,7 +32,7 @@ router.get('/dashboard', protect, dashboard)
 router.get('/:id', protect, admin, getUserById)
 router.put('/:id', protect, admin, updateUser)
 router.delete('/:id', protect, admin, deleteUser)
-
+router.get('/role', protect, admin, getRoles)
 
 router.get('/voucher/myvoucher',protect, getUserVoucher)
 router.post('/voucher/add',protect, addVoucherToUserVoucher)
