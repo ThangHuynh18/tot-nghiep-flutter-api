@@ -154,7 +154,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // [GET] /api/users
 // private/admin
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}).sort({ createdAt: 'desc' })
+  const users = await User.find({}, {"voucher": 0, "deleted": 0, "password": 0, "wishListItems": 0, "cartItems": 0}).populate([
+    { path: 'role', select: 'name' },
+  ])).sort({ createdAt: 'desc' })
 
   res.json(users)
 })
