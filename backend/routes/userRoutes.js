@@ -29,10 +29,11 @@ router.put('/change-password', protect, changePassword)
 router.get('/total', protect, admin, totalUser)
 router.get('/dashboard', protect, dashboard)
 // router.get('/dashboard', protect, admin, dashboard)
+router.get('/role', protect, admin, getRoles)
 router.get('/:id', protect, admin, getUserById)
 router.put('/:id', protect, admin, updateUser)
 router.delete('/:id', protect, admin, deleteUser)
-router.get('/role', protect, admin, getRoles)
+
 
 router.get('/voucher/myvoucher',protect, getUserVoucher)
 router.post('/voucher/add',protect, addVoucherToUserVoucher)
