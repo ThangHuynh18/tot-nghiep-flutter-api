@@ -27,6 +27,17 @@ const orderSchema = mongoose.Schema(
       district: { type: String, required: true, default: ' ' },
       ward: { type: String, required: true, default: ' ' },
     },
+    refund: {
+      reason: { type: String, required: true, default: ' ' },
+      refundAt: {
+        type: Date,
+      },
+      images: [
+        {
+          imageLink: { type: String },
+        },
+      ],
+    },
     paymentMethod: {
       type: String,
       required: true,
