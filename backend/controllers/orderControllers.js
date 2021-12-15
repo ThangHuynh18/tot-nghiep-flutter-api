@@ -145,7 +145,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
           }
           break
         case OrderStatus.FINISH:
-          if (order.status === OrderStatus.ACCEPT) {
+          if (order.status === OrderStatus.RECEIVED) {
             // order.isPaid = true
             // order.paidAt = Date.now()
             // order.isDelivered = true
@@ -153,9 +153,46 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
             order.status = OrderStatus.FINISH
           } else {
             res.status(400)
-            throw new Error('Đơn hàng này chưa được giao hoặc đã bị hủy!')
+            throw new Error('Đơn hàng này khách chưa nhận được hoặc đã bị hủy!')
           }
           break
+          
+          case OrderStatus.RECEIVED:
+          if (order.status === OrderStatus.ACCEPT) {
+            order.status = OrderStatus.RECEIVED
+          } else {
+            res.status(400)
+            throw new Error('Đơn hàng này chưa được chấp nhận hoặc đã bị hủy!')
+          }
+          break
+          case OrderStatus.REFUNDING:
+          if (order.status === OrderStatus.RECEIVED) {
+            order.refundAt = Date.now()
+            order.status = OrderStatus.REFUNDING
+          } else {
+            res.status(400)
+            throw new Error('Đơn hàng này khách chưa nhận được hoặc đã bị hủy!')
+          }
+          break
+          case OrderStatus.REFUNDED:
+          if (order.status === OrderStatus.REFUNDING) {
+            order.refundAt = Date.now()
+            order.status = OrderStatus.REFUNDED
+            order.orderItems.forEach(async (i) => {
+              //console.log("product id: "+i.product)
+              const product = await Product.findById(i.product)
+              //console.log("PRODUCT: "+product)
+              if (product) {
+                product.countInStock = product.countInStock + i.qty
+              }
+              await product.save()
+            })
+          } else {
+            res.status(400)
+            throw new Error('Đơn hàng này chưa được khách bấm trả hoặc đã bị hủy!')
+          }
+          break
+          
         default:
           break
       }
@@ -170,6 +207,30 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
     throw new Error(`${error}`)
   }
 })
+
+
+// Update order to refund
+// [PUT] /api/orders/:id/refund
+// private
+const updateRefundOrder = asyncHandler(async (req, res) => {
+  //const { reason, images} = req.body
+  try {
+    const order = await Order.findById(req.params.id)
+    if(order){
+      order.refund = req.body.refund
+      const updateOrder = await order.save()
+      res.status(200).json(updateOrder)
+    } else {
+      res.status(404)
+      throw new Error('Không tìm thấy đơn hàng này!')
+    }
+    
+  } catch (error) {
+    res.status(400)
+    throw new Error(`${error}`)
+  }
+})
+
 
 // @desc    Update order to paid
 // @router  PUT /api/orders/:id/pay
@@ -363,4 +424,5 @@ export {
   getTotalOrdersByStatus,
   getOrdersByStatus,
   getAllOrdersByStatus,
+  updateRefundOrder,
 }
