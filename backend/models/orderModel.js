@@ -30,7 +30,7 @@ const orderSchema = mongoose.Schema(
     refund: {
       reason: { type: String, required: true, default: ' ' },
       refundAt: {
-        type: Date, required: true, default: ' '
+        type: Date, required: true, default: null
       },
       images: [
         {
