@@ -30,11 +30,11 @@ const orderSchema = mongoose.Schema(
     refund: {
       reason: { type: String, required: true, default: ' ' },
       refundAt: {
-        type: Date, required: true
+        type: Date, required: true, default: ' '
       },
       images: [
         {
-          imageLink: { type: String, required: [true, 'Chưa chọn hình ảnh!'] },
+          imageLink: { type: String, required: [true, 'Chưa chọn hình ảnh!'], default: ' ' },
         },
       ],
     },
