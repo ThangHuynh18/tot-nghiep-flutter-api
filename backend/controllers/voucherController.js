@@ -40,7 +40,7 @@ const createVoucher = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc        Update user 
+// @desc        Update voucher
 // @route       PUT /api/vouchers/:id
 // @access      Private/Admin
 const updateVoucher = asyncHandler(async (req, res) => {
@@ -64,7 +64,7 @@ const updateVoucher = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc        Update user 
+// @desc        delete voucher 
 // @route       PUT /api/vouchers/:id
 // @access      Private/Admin
 const deleteVoucher = asyncHandler(async (req, res) => {
@@ -79,4 +79,24 @@ const deleteVoucher = asyncHandler(async (req, res) => {
     }
 })
 
-export { getVouchers, createVoucher, updateVoucher, deleteVoucher }
+
+// Get voucher discount < 10%
+// [GET] /api/vouchers/discount
+// public
+const getDiscountVoucher = asyncHandler(async (req, res) => {
+  try {
+    const discount = await Voucher.find({ discount: { $lt: 10 } })
+      .sort({ discount: 'desc' })
+    if (discount) {
+      res.status(200).json(discount)
+    } else {
+      res.status(404)
+      throw new Error('Không tìm được!')
+    }
+  } catch (error) {
+    res.status(400)
+    throw new Error(`${error}`)
+  }
+})
+
+export { getVouchers, createVoucher, updateVoucher, deleteVoucher, getDiscountVoucher }
