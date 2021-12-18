@@ -320,11 +320,16 @@ const addVoucherToUserVoucher = asyncHandler(async (req, res) => {
 
   if (voucher) {
     
-        const alreadyAdded = req.user.voucher.find(
-          (item) => item.toString() === voucher._id.toString()
-      )
+//         const alreadyAdded = req.user.voucher.find(
+//           (item) => item.toString() === voucher._id.toString()
+//       )
+    const alreadyAdded = await User.findOne({
+        voucher: voucher._id,
+      })
       if (alreadyAdded) {
-         res.status(200)
+         //res.status(200)
+        res.status(400)
+      throw new Error('Voucher already have in your wallet')
       }
       else {
         req.user.voucher.push(voucher)
