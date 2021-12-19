@@ -29,7 +29,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
         const bestSeller = await Order.aggregate([
             {
                 $match: {
-                  status: 'ACCEPT',
+                  status: 'FINISH',
                   
                 },
             },
@@ -87,7 +87,7 @@ const productBestSeller = asyncHandler(async (req, res, next) => {
             const bestSeller = await Order.aggregate([
                 {
                     $match: {
-                      status: 'ACCEPT',
+                      status: 'FINISH',
                       
                     },
                 },
@@ -154,7 +154,7 @@ const orderBetween = asyncHandler(async (req, res, next) => {
         const orders = await Order.aggregate([
             {
                 $match: {
-                  status: 'ACCEPT',
+                  status: 'FINISH',
                   
                 },
             },
@@ -187,7 +187,7 @@ const orderBetween = asyncHandler(async (req, res, next) => {
             const orders = await Order.aggregate([
                 {
                     $match: {
-                      status: 'ACCEPT',
+                      status: 'FINISH',
                       
                     },
                 },
