@@ -314,9 +314,12 @@ const dashboard = asyncHandler(async (req, res) => {
 // @route   POST /api/users/voucher/add
 // @access  Private
 const addVoucherToUserVoucher = asyncHandler(async (req, res) => {
-  const voucherName = req.body.name
+//   const voucherName = req.body.name
 
-  const voucher = await Voucher.findOne({ "name": voucherName })
+//   const voucher = await Voucher.findOne({ "name": voucherName })
+  const voucherId = req.body.id
+
+  const voucher = await Voucher.findOne({ "_id": voucherId })
 
   if (voucher) {
     
