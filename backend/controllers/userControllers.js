@@ -317,18 +317,19 @@ const addVoucherToUserVoucher = asyncHandler(async (req, res) => {
 //   const voucherName = req.body.name
 
 //   const voucher = await Voucher.findOne({ "name": voucherName })
-  const voucherId = req.body.id
-
-  const voucher = await Voucher.findOne({ "_id": voucherId })
+  const voucher = await Voucher.findById(req.body.id)
 
   if (voucher) {
     
 //         const alreadyAdded = req.user.voucher.find(
 //           (item) => item.toString() === voucher._id.toString()
 //       )
-    const alreadyAdded = await User.findOne({
-        voucher: voucher._id,
-      })
+//     const alreadyAdded = await User.findOne({
+//         voucher: voucher._id,
+//       })
+    const alreadyAdded = req.user.voucher.find(
+        (item) => item._id.toString() === voucher._id.toString()
+    )
       if (alreadyAdded) {
          //res.status(200)
         res.status(400)
