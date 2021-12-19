@@ -28,7 +28,7 @@ const orderSchema = mongoose.Schema(
       ward: { type: String, required: true, default: ' ' },
     },
     refund: {
-      reason: { type: String, required: true, default: ' ' },
+      reason: { type: String, default: ' ' },
       refundAt: {
         type: Date, default: null
       },
